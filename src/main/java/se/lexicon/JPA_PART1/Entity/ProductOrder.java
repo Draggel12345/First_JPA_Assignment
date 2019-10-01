@@ -4,11 +4,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class ProductOrder {
@@ -19,7 +23,15 @@ public class ProductOrder {
 	
 	private LocalDate orderDate;
 	private LocalTime orderTime;
+	
+	@ManyToOne(fetch = FetchType.LAZY,
+			cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
+	@JoinColumn(name = "user_id")
 	private AppUser customer;
+	
+	@OneToMany(fetch = FetchType.LAZY,
+			cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH},
+	mappedBy = "productOrder", orphanRemoval = true)
 	private List<OrderItem> items;
 	
 	public ProductOrder() {}
@@ -54,6 +66,15 @@ public class ProductOrder {
 				throw new IllegalArgumentException("Cant remove - " + item);
 			}
 		}
+	}
+	
+	public double totalProductPrice() {
+		double sum = 0;
+		for(OrderItem item : items) {
+			sum += item.calculatePrice();
+		}
+		
+		return sum;
 	}
 	
 	public LocalDate getOrderDate() {

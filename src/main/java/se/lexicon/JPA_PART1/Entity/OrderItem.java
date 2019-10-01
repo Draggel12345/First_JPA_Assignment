@@ -2,10 +2,14 @@ package se.lexicon.JPA_PART1.Entity;
 
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class OrderItem {
@@ -14,9 +18,17 @@ public class OrderItem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int orderId;
 	
-	private Product product;
-	private ProductOrder productOrder;
 	private int quantity;
+	
+	@ManyToOne(fetch = FetchType.EAGER,
+			cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
+	@JoinColumn(name = "product_id")
+	private Product product;
+	
+	@ManyToOne(fetch = FetchType.LAZY,
+			cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
+	@JoinColumn(name = "productOrder_id")
+	private ProductOrder productOrder;
 	
 	public OrderItem() {}
 	
@@ -31,8 +43,8 @@ public class OrderItem {
 		setProductOrder(productOrder);
 	}
 	
-	public double calculatePrice(double price, int quantity) {
-		return price * quantity;
+	public double calculatePrice() {
+		return product.getPrice() * quantity;
 	}
 
 	public int getQuantity() {

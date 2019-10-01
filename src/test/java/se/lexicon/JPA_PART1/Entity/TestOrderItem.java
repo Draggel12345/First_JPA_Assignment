@@ -38,7 +38,7 @@ public class TestOrderItem {
 		testObject.setQuantity(5);
 		
 		double expected = 500.00;
-		double actual = testObject.calculatePrice(product.getPrice(), testObject.getQuantity());
+		double actual = testObject.calculatePrice();
 		
 		assertTrue(expected == actual);
 		assertEquals(expected, actual, 0);

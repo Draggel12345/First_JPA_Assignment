@@ -65,6 +65,25 @@ public class TestProductOrder {
 	}
 	
 	@Test
+	public void test_total_product_price_from_list_of_items() {
+		Product prod1 = new Product("sak1", 5.0);
+		Product prod2 = new Product("sak2", 3.0);
+		
+		OrderItem item1 = new OrderItem(2, prod1, testObject);
+		OrderItem item2 = new OrderItem(1, prod2, testObject);
+		
+		testObject.getItems().add(item1);
+		testObject.getItems().add(item2);
+		
+		double expectedTotalPrice = 13.00;
+		double actualTotalPrice = testObject.totalProductPrice();
+		
+		assertTrue(expectedTotalPrice == actualTotalPrice);
+		assertEquals(expectedTotalPrice, actualTotalPrice, 0);
+		
+	}
+	
+	@Test
 	public void test_equals_and_hashCode() {
 		ProductOrder copy = new ProductOrder(1, LocalDate.of(2019, 9, 30), LocalTime.of(11, 0), testUser, new ArrayList<>());
 		
