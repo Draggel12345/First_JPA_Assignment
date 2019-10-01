@@ -1,6 +1,8 @@
 package se.lexicon.JPA_PART1.Entity;
 
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -14,13 +16,14 @@ public class TestProductOrder {
 	@Before
 	public void setUp() {
 		testUser = new AppUser("Test", "Testsson", "test@lexicon.se");
-		testObject = new ProductOrder(1, LocalDateTime.of(2019, 9, 30, 11, 0), testUser, new ArrayList<>());
+		testObject = new ProductOrder(1, LocalDate.of(2019, 9, 30), LocalTime.of(11, 0) , testUser, new ArrayList<>());
 	}
 	
 	@Test
 	public void testObject_success_created() {
 		assertEquals(1, testObject.getProductOrderId());
-		assertEquals(LocalDateTime.of(2019, 9, 30, 11, 0), testObject.getOrderDateTime());
+		assertEquals(LocalDate.of(2019, 9, 30), testObject.getOrderDate());
+		assertEquals(LocalTime.of(11, 0), testObject.getOrderTime());
 		assertEquals(testUser, testObject.getCustomer());
 		assertEquals(new ArrayList<>(), testObject.getItems());
 	}
@@ -63,7 +66,7 @@ public class TestProductOrder {
 	
 	@Test
 	public void test_equals_and_hashCode() {
-		ProductOrder copy = new ProductOrder(1, LocalDateTime.of(2019, 9, 30, 11, 0), testUser, new ArrayList<>());
+		ProductOrder copy = new ProductOrder(1, LocalDate.of(2019, 9, 30), LocalTime.of(11, 0), testUser, new ArrayList<>());
 		
 		assertTrue(copy.equals(testObject));
 		assertEquals(copy.hashCode(), testObject.hashCode());
@@ -74,7 +77,8 @@ public class TestProductOrder {
 		String toString = testObject.toString();
 		
 		assertTrue(toString.contains("1") &&
-				   toString.contains("2019-09-30T11:00") &&
+				   toString.contains("2019-09-30") &&
+				   toString.contains("11:00") &&
 				   toString.contains(testUser.toString()) &&
 				   toString.contains("")
 				);

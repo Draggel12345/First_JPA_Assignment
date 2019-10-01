@@ -14,11 +14,9 @@ public class OrderItem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int orderId;
 	
-	private int quantity;
-	
 	private Product product;
-	
 	private ProductOrder productOrder;
+	private int quantity;
 	
 	public OrderItem() {}
 	
@@ -64,7 +62,7 @@ public class OrderItem {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(orderId, product, productOrder, quantity);
+		return Objects.hash(orderId, product, quantity);
 	}
 
 	@Override
@@ -76,8 +74,7 @@ public class OrderItem {
 		if (getClass() != obj.getClass())
 			return false;
 		OrderItem other = (OrderItem) obj;
-		return orderId == other.orderId && Objects.equals(product, other.product)
-				&& Objects.equals(productOrder, other.productOrder) && quantity == other.quantity;
+		return orderId == other.orderId && Objects.equals(product, other.product) && quantity == other.quantity;
 	}
 
 	@Override
@@ -85,12 +82,10 @@ public class OrderItem {
 		StringBuilder builder = new StringBuilder();
 		builder.append("OrderItem [orderId=");
 		builder.append(orderId);
-		builder.append(", quantity=");
-		builder.append(quantity);
 		builder.append(", product=");
 		builder.append(product);
-		builder.append(", productOrder=");
-		builder.append(productOrder);
+		builder.append(", quantity=");
+		builder.append(quantity);
 		builder.append("]");
 		return builder.toString();
 	}

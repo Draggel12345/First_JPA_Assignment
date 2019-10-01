@@ -2,7 +2,8 @@ package se.lexicon.JPA_PART1.Entity;
 
 import static org.junit.Assert.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -19,7 +20,7 @@ public class TestOrderItem {
 	public void setUp() {
 		user = new AppUser("Test", "Testsson", "test@lexicon.se");
 		product = new Product("Eclipse", 99.99);
-		order = new ProductOrder(LocalDateTime.of(2019, 10, 5, 11, 30), user, new ArrayList<>());
+		order = new ProductOrder(LocalDate.of(2019, 10, 1), LocalTime.of(10, 0), user, new ArrayList<>());
 		testObject = new OrderItem(1, 5, product, order);
 	}
 	
@@ -58,8 +59,7 @@ public class TestOrderItem {
 		assertTrue(
 				toString.contains("1") &&
 				toString.contains("5") &&
-				toString.contains(product.toString()) &&
-				toString.contains(order.toString())
+				toString.contains(product.toString())
 				);
 	}
 }

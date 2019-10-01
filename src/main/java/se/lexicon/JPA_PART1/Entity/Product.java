@@ -2,7 +2,6 @@ package se.lexicon.JPA_PART1.Entity;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +14,6 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int productId;
 	
-	@Column(unique = true, length = 50)
 	private String productName;
 	private double price;
 	

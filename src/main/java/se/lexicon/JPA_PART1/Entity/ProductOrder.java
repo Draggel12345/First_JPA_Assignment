@@ -1,6 +1,7 @@
 package se.lexicon.JPA_PART1.Entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,21 +17,21 @@ public class ProductOrder {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int productOrderId;
 	
-	private LocalDateTime orderDateTime;
-
+	private LocalDate orderDate;
+	private LocalTime orderTime;
 	private AppUser customer;
-	
 	private List<OrderItem> items;
 	
 	public ProductOrder() {}
 	
-	public ProductOrder(int productOrderId, LocalDateTime orderDateTime, AppUser customer, List<OrderItem> items) {
-		this(orderDateTime, customer, items);
+	public ProductOrder(int productOrderId, LocalDate orderDate, LocalTime orderTime, AppUser customer, List<OrderItem> items) {
+		this(orderDate, orderTime, customer, items);
 		this.productOrderId = productOrderId;
 	}
 	
-	public ProductOrder(LocalDateTime orderDateTime, AppUser customer, List<OrderItem> items) {
-		setOrderDateTime(orderDateTime);
+	public ProductOrder(LocalDate orderDate, LocalTime orderTime, AppUser customer, List<OrderItem> items) {
+		setOrderDate(orderDate);
+		setOrderTime(orderTime);
 		setCustomer(customer);
 		setItems(items);
 	}
@@ -55,11 +56,19 @@ public class ProductOrder {
 		}
 	}
 	
-	public LocalDateTime getOrderDateTime() {
-		return orderDateTime;
+	public LocalDate getOrderDate() {
+		return orderDate;
 	}
-	public void setOrderDateTime(LocalDateTime orderDateTime) {
-		this.orderDateTime = orderDateTime;
+	public void setOrderDate(LocalDate orderDate) {
+		this.orderDate = orderDate;
+	}
+	
+	public LocalTime getOrderTime() {
+		return orderTime;
+	}
+	
+	public void setOrderTime(LocalTime orderTime) {
+		this.orderTime = orderTime;
 	}
 	
 	public AppUser getCustomer() {
@@ -82,7 +91,7 @@ public class ProductOrder {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customer, items, orderDateTime, productOrderId);
+		return Objects.hash(customer, orderDate, orderTime, productOrderId);
 	}
 
 	@Override
@@ -94,8 +103,8 @@ public class ProductOrder {
 		if (getClass() != obj.getClass())
 			return false;
 		ProductOrder other = (ProductOrder) obj;
-		return Objects.equals(customer, other.customer) && Objects.equals(items, other.items)
-				&& Objects.equals(orderDateTime, other.orderDateTime) && productOrderId == other.productOrderId;
+		return Objects.equals(customer, other.customer) && Objects.equals(orderDate, other.orderDate)
+				&& Objects.equals(orderTime, other.orderTime) && productOrderId == other.productOrderId;
 	}
 
 	@Override
@@ -103,11 +112,13 @@ public class ProductOrder {
 		StringBuilder builder = new StringBuilder();
 		builder.append("ProductOrder [productOrderId=");
 		builder.append(productOrderId);
-		builder.append(", orderDateTime=");
-		builder.append(orderDateTime);
+		builder.append(", orderDate=");
+		builder.append(orderDate);
+		builder.append(", orderTime=");
+		builder.append(orderTime);
 		builder.append(", customer=");
 		builder.append(customer);
 		builder.append("]");
 		return builder.toString();
-	}	
+	}
 }
