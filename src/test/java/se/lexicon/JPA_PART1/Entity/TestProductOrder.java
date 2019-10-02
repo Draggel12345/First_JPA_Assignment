@@ -43,8 +43,8 @@ public class TestProductOrder {
 	
 	@Test
 	public void test_removing_from_list_of_items() {
-		OrderItem test1 = new OrderItem();
-		OrderItem test2 = new OrderItem();
+		OrderItem test1 = new OrderItem(1, null, testObject);
+		OrderItem test2 = new OrderItem(2, null, testObject);
 		
 		testObject.addItem(test1);
 		testObject.addItem(test2);
@@ -101,6 +101,5 @@ public class TestProductOrder {
 				   toString.contains(testUser.toString()) &&
 				   toString.contains("")
 				);
-		
 	}
 }
