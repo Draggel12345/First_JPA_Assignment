@@ -12,8 +12,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import java.util.Optional;
-
+import java.util.List;
 import org.junit.Before;
 
 @RunWith(SpringRunner.class)
@@ -41,13 +40,15 @@ public class TestProductRepo {
 	}
 	
 	@Test
-	public void given_Eclipse_should_return_optional_of_test_product() {
+	public void given_ecli_should_return_Eclipse_and_list_size_of_1() {
 		
-		String product = "Eclipse";
-		Optional<Product> result = testObject.findByProductName(product);
+		String product = "ecli";
+		int expectedSize = 1;
 		
-		assertTrue(result.isPresent());
-		assertEquals("Eclipse", result.get().getProductName());
+		List<Product> result = testObject.findByProductNameStartsWithIgnoreCase(product);
+		
+		assertTrue(result.contains(testProduct));
+		assertEquals(expectedSize, result.size());
 		
 	}
 	

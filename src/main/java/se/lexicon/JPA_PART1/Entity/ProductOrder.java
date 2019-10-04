@@ -2,6 +2,7 @@ package se.lexicon.JPA_PART1.Entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -42,6 +43,7 @@ public class ProductOrder {
 	}
 	
 	public ProductOrder(LocalDate orderDate, LocalTime orderTime, AppUser customer, List<OrderItem> items) {
+		if(items == null) throw new IllegalArgumentException("Items was - " + items);
 		setOrderDate(orderDate);
 		setOrderTime(orderTime);
 		setCustomer(customer);
@@ -49,6 +51,7 @@ public class ProductOrder {
 	}
 	
 	public void addItem(OrderItem item) throws IllegalArgumentException {
+		if(items == null) items = new ArrayList<>();
 		if(!items.contains(item)) {
 			items.add(item);
 			item.setProductOrder(this);
@@ -58,6 +61,7 @@ public class ProductOrder {
 	}
 	
 	public void removeItem(OrderItem item) throws IllegalArgumentException {
+		if(items == null) items = new ArrayList<>();
 		for(OrderItem i : items) {
 			if(i.equals(item)) {
 				items.remove(item);
@@ -103,6 +107,9 @@ public class ProductOrder {
 		return items;
 	}
 	public void setItems(List<OrderItem> items) {
+		if(items == null) {
+			this.items.forEach(item -> item.setProduct(null));
+		}
 		this.items = items;
 	}
 	
