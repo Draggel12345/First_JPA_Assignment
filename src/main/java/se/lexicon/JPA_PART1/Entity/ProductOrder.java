@@ -72,6 +72,13 @@ public class ProductOrder {
 		}
 	}
 	
+	public void clearItems() {
+		if(this.items != null) {
+			items.forEach(item -> item.setProductOrder(null));
+			items.clear();
+		}
+	}
+	
 	public double totalProductPrice() {
 		double sum = 0;
 		for(OrderItem item : items) {
